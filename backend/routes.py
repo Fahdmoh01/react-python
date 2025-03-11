@@ -60,7 +60,8 @@ def delete_friend(id):
     try:
         friend = Friend.query.get(id)
         if friend is None:
-            return jsonify({"error: Friend not found"}), 404
+            return jsonify({"error": "Friend not found"}), 404
+
         db.session.delete(friend)
         db.session.commit()
         return jsonify({"msg": "Friend deleted"}), 200
@@ -75,9 +76,10 @@ def update_friend(id):
     try:
         friend = Friend.query.get(id)
         if friend is None:
-            return jsonify({"error": "Friend is not found"}), 404
+            return jsonify({"error": "Friend not found"}), 404
 
         data = request.json
+
         friend.name = data.get("name", friend.name)
         friend.role = data.get("role", friend.role)
         friend.description = data.get("description", friend.description)
